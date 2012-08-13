@@ -1,0 +1,93 @@
+From 8dc8742d8fd534bc1d0b424f0195e00dbee756a1 Mon Sep 17 00:00:00 2001
+From: arkady <a-miasnikov@ti.com>
+Date: Mon, 13 Aug 2012 11:02:30 +0300
+Subject: [PATCH 1/1] Add irq=sdio to support IBI
+
+---
+ drv/load_wlcore.sh                  |    2 +-
+ drv/load_wlcore_rdl1_rdl3_siso20.sh |    2 +-
+ drv/load_wlcore_rdl1_rdl3_siso40.sh |    2 +-
+ drv/load_wlcore_rdl2_rdl4_mimo.sh   |    2 +-
+ drv/load_wlcore_rdl2_rdl4_siso20.sh |    2 +-
+ drv/load_wlcore_rdl2_rdl4_siso40.sh |    2 +-
+ 6 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/drv/load_wlcore.sh b/drv/load_wlcore.sh
+index 54cbe5d..116aefc 100755
+--- a/drv/load_wlcore.sh
++++ b/drv/load_wlcore.sh
+@@ -3,7 +3,7 @@
+ insmod /system/lib/modules/compat.ko
+ insmod /system/lib/modules/cfg80211.ko
+ insmod /system/lib/modules/mac80211.ko disable_scan_while_active=1
+-insmod /system/lib/modules/wlcore.ko
++insmod /system/lib/modules/wlcore.ko irq=sdio
+ insmod /system/lib/modules/wl12xx.ko
+ insmod /system/lib/modules/wl18xx.ko
+ 
+diff --git a/drv/load_wlcore_rdl1_rdl3_siso20.sh b/drv/load_wlcore_rdl1_rdl3_siso20.sh
+index f6ac447..04c46ae 100755
+--- a/drv/load_wlcore_rdl1_rdl3_siso20.sh
++++ b/drv/load_wlcore_rdl1_rdl3_siso20.sh
+@@ -3,6 +3,6 @@
+ insmod /system/lib/modules/compat.ko
+ insmod /system/lib/modules/cfg80211.ko
+ insmod /system/lib/modules/mac80211.ko disable_scan_while_active=1
+-insmod /system/lib/modules/wlcore.ko
++insmod /system/lib/modules/wlcore.ko irq=sdio
+ insmod /system/lib/modules/wl12xx.ko
+ insmod /system/lib/modules/wl18xx.ko board_type=hdk ht_mode=siso20 n_antennas_2=1 n_antennas_5=1 dc2dc=1
+diff --git a/drv/load_wlcore_rdl1_rdl3_siso40.sh b/drv/load_wlcore_rdl1_rdl3_siso40.sh
+index 7921539..8625d21 100755
+--- a/drv/load_wlcore_rdl1_rdl3_siso40.sh
++++ b/drv/load_wlcore_rdl1_rdl3_siso40.sh
+@@ -3,6 +3,6 @@
+ insmod /system/lib/modules/compat.ko
+ insmod /system/lib/modules/cfg80211.ko
+ insmod /system/lib/modules/mac80211.ko disable_scan_while_active=1
+-insmod /system/lib/modules/wlcore.ko
++insmod /system/lib/modules/wlcore.ko irq=sdio
+ insmod /system/lib/modules/wl12xx.ko
+ insmod /system/lib/modules/wl18xx.ko board_type=hdk ht_mode=wide n_antennas_2=1 n_antennas_5=1 dc2dc=1
+diff --git a/drv/load_wlcore_rdl2_rdl4_mimo.sh b/drv/load_wlcore_rdl2_rdl4_mimo.sh
+index 0eeb72c..d318000 100755
+--- a/drv/load_wlcore_rdl2_rdl4_mimo.sh
++++ b/drv/load_wlcore_rdl2_rdl4_mimo.sh
+@@ -3,7 +3,7 @@
+ insmod /system/lib/modules/compat.ko
+ insmod /system/lib/modules/cfg80211.ko
+ insmod /system/lib/modules/mac80211.ko disable_scan_while_active=1
+-insmod /system/lib/modules/wlcore.ko
++insmod /system/lib/modules/wlcore.ko irq=sdio
+ insmod /system/lib/modules/wl12xx.ko
+ insmod /system/lib/modules/wl18xx.ko board_type=hdk ht_mode=mimo n_antennas_2=2 n_antennas_5=2 dc2dc=0
+ 
+diff --git a/drv/load_wlcore_rdl2_rdl4_siso20.sh b/drv/load_wlcore_rdl2_rdl4_siso20.sh
+index b692f13..778ccc6 100755
+--- a/drv/load_wlcore_rdl2_rdl4_siso20.sh
++++ b/drv/load_wlcore_rdl2_rdl4_siso20.sh
+@@ -3,7 +3,7 @@
+ insmod /system/lib/modules/compat.ko
+ insmod /system/lib/modules/cfg80211.ko
+ insmod /system/lib/modules/mac80211.ko disable_scan_while_active=1
+-insmod /system/lib/modules/wlcore.ko
++insmod /system/lib/modules/wlcore.ko irq=sdio
+ insmod /system/lib/modules/wl12xx.ko
+ insmod /system/lib/modules/wl18xx.ko board_type=hdk ht_mode=siso20 n_antennas_2=1 n_antennas_5=1 dc2dc=0
+ 
+diff --git a/drv/load_wlcore_rdl2_rdl4_siso40.sh b/drv/load_wlcore_rdl2_rdl4_siso40.sh
+index 8862fae..ce48f56 100755
+--- a/drv/load_wlcore_rdl2_rdl4_siso40.sh
++++ b/drv/load_wlcore_rdl2_rdl4_siso40.sh
+@@ -3,7 +3,7 @@
+ insmod /system/lib/modules/compat.ko
+ insmod /system/lib/modules/cfg80211.ko
+ insmod /system/lib/modules/mac80211.ko disable_scan_while_active=1
+-insmod /system/lib/modules/wlcore.ko
++insmod /system/lib/modules/wlcore.ko irq=sdio
+ insmod /system/lib/modules/wl12xx.ko
+ insmod /system/lib/modules/wl18xx.ko board_type=hdk ht_mode=wide n_antennas_2=1 n_antennas_5=1 dc2dc=0
+ 
+-- 
+1.7.9
+
