@@ -19,7 +19,7 @@ index 54cbe5d..116aefc 100755
 @@ -3,7 +3,7 @@
  insmod /system/lib/modules/compat.ko
  insmod /system/lib/modules/cfg80211.ko
- insmod /system/lib/modules/mac80211.ko disable_scan_while_active=1
+ insmod /system/lib/modules/mac80211.ko disable_scan_while_active=0
 -insmod /system/lib/modules/wlcore.ko
 +insmod /system/lib/modules/wlcore.ko irq=sdio
  insmod /system/lib/modules/wl12xx.ko
@@ -32,7 +32,7 @@ index f6ac447..04c46ae 100755
 @@ -3,6 +3,6 @@
  insmod /system/lib/modules/compat.ko
  insmod /system/lib/modules/cfg80211.ko
- insmod /system/lib/modules/mac80211.ko disable_scan_while_active=1
+ insmod /system/lib/modules/mac80211.ko disable_scan_while_active=0
 -insmod /system/lib/modules/wlcore.ko
 +insmod /system/lib/modules/wlcore.ko irq=sdio
  insmod /system/lib/modules/wl12xx.ko
@@ -44,7 +44,7 @@ index 7921539..8625d21 100755
 @@ -3,6 +3,6 @@
  insmod /system/lib/modules/compat.ko
  insmod /system/lib/modules/cfg80211.ko
- insmod /system/lib/modules/mac80211.ko disable_scan_while_active=1
+ insmod /system/lib/modules/mac80211.ko disable_scan_while_active=0
 -insmod /system/lib/modules/wlcore.ko
 +insmod /system/lib/modules/wlcore.ko irq=sdio
  insmod /system/lib/modules/wl12xx.ko
@@ -56,7 +56,7 @@ index 0eeb72c..d318000 100755
 @@ -3,7 +3,7 @@
  insmod /system/lib/modules/compat.ko
  insmod /system/lib/modules/cfg80211.ko
- insmod /system/lib/modules/mac80211.ko disable_scan_while_active=1
+ insmod /system/lib/modules/mac80211.ko disable_scan_while_active=0
 -insmod /system/lib/modules/wlcore.ko
 +insmod /system/lib/modules/wlcore.ko irq=sdio
  insmod /system/lib/modules/wl12xx.ko
@@ -69,7 +69,7 @@ index b692f13..778ccc6 100755
 @@ -3,7 +3,7 @@
  insmod /system/lib/modules/compat.ko
  insmod /system/lib/modules/cfg80211.ko
- insmod /system/lib/modules/mac80211.ko disable_scan_while_active=1
+ insmod /system/lib/modules/mac80211.ko disable_scan_while_active=0
 -insmod /system/lib/modules/wlcore.ko
 +insmod /system/lib/modules/wlcore.ko irq=sdio
  insmod /system/lib/modules/wl12xx.ko
@@ -82,7 +82,7 @@ index 8862fae..ce48f56 100755
 @@ -3,7 +3,7 @@
  insmod /system/lib/modules/compat.ko
  insmod /system/lib/modules/cfg80211.ko
- insmod /system/lib/modules/mac80211.ko disable_scan_while_active=1
+ insmod /system/lib/modules/mac80211.ko disable_scan_while_active=0
 -insmod /system/lib/modules/wlcore.ko
 +insmod /system/lib/modules/wlcore.ko irq=sdio
  insmod /system/lib/modules/wl12xx.ko
