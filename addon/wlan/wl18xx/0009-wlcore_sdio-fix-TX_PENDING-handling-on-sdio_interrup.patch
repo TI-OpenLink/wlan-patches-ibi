@@ -1,4 +1,4 @@
-From 06ea0b42f36c713de2a6d167a5e61b8556fc6533 Mon Sep 17 00:00:00 2001
+From bbc704b35b8302ead7983df666157fc5afe46c4f Mon Sep 17 00:00:00 2001
 From: Eliad Peller <eliad@wizery.com>
 Date: Mon, 30 Jul 2012 20:35:54 +0300
 Subject: [PATCH 09/10] wlcore_sdio: fix TX_PENDING handling on sdio_interrupt
@@ -75,10 +75,10 @@ index d6d7d27..5f0208a 100644
  {
  	if (WARN_ON(!rate_set))
 diff --git a/drivers/net/wireless/ti/wlcore/wlcore.h b/drivers/net/wireless/ti/wlcore/wlcore.h
-index 8a922b6..3afb801 100644
+index 3dc14c8..e7de89f 100644
 --- a/drivers/net/wireless/ti/wlcore/wlcore.h
 +++ b/drivers/net/wireless/ti/wlcore/wlcore.h
-@@ -442,6 +442,8 @@ int wlcore_set_key(struct wl1271 *wl, enum set_key_cmd cmd,
+@@ -444,6 +444,8 @@ int wlcore_set_key(struct wl1271 *wl, enum set_key_cmd cmd,
  irqreturn_t wl12xx_hardirq(int irq, void *cookie);
  irqreturn_t wlcore_irq(int irq, void *cookie);
  int wlcore_irq_locked(struct wl1271 *wl);
@@ -88,5 +88,5 @@ index 8a922b6..3afb801 100644
  static inline void
  wlcore_set_ht_cap(struct wl1271 *wl, enum ieee80211_band band,
 -- 
-1.7.7.6
+1.7.9
 

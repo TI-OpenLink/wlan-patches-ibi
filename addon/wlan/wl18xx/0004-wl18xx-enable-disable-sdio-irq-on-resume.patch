@@ -1,4 +1,4 @@
-From bad0850d2ebf1ab16df266aa62bb19c4ddd60b85 Mon Sep 17 00:00:00 2001
+From 4d35f2ce4bc4af8fe6340a98b2a75622570d3fbf Mon Sep 17 00:00:00 2001
 From: Eliad Peller <eliad@wizery.com>
 Date: Thu, 3 Nov 2011 14:55:18 +0200
 Subject: [PATCH 04/10] wl18xx: enable/disable sdio irq on resume
@@ -53,5 +53,5 @@ index 7534a38..ef3deb4 100644
  	glue->handler = handler;
  	glue->thread_fn = thread_fn;
 -- 
-1.7.7.6
+1.7.9
 

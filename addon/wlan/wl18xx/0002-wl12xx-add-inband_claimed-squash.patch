@@ -1,7 +1,7 @@
-From 928ea625b111f99a1a3a5318e15889097a2370af Mon Sep 17 00:00:00 2001
+From 984ab2f85d9167768d6de62f303749fa37a1e502 Mon Sep 17 00:00:00 2001
 From: Eliad Peller <eliad@wizery.com>
 Date: Sun, 22 Jan 2012 15:12:45 +0200
-Subject: [PATCH 2/2] wl12xx: add inband_claimed (squash)
+Subject: [PATCH 02/10] wl12xx: add inband_claimed (squash)
 
 Signed-off-by: Eliad Peller <eliad@wizery.com>
 ---
@@ -90,7 +90,7 @@ index a9d9ece..7534a38 100644
  
  static void wl12xx_sdio_free_irq(struct device *child)
 diff --git a/drivers/net/wireless/ti/wlcore/wlcore.h b/drivers/net/wireless/ti/wlcore/wlcore.h
-index d03353f..5c77a67 100644
+index ec3cba4..9c3f0ca 100644
 --- a/drivers/net/wireless/ti/wlcore/wlcore.h
 +++ b/drivers/net/wireless/ti/wlcore/wlcore.h
 @@ -164,6 +164,7 @@ struct wl1271 {
@@ -102,10 +102,10 @@ index d03353f..5c77a67 100644
  
  	spinlock_t wl_lock;
 diff --git a/drivers/net/wireless/ti/wlcore/wlcore_i.h b/drivers/net/wireless/ti/wlcore/wlcore_i.h
-index cb1e3c3..9c2ce02 100644
+index a912058..ca3452b 100644
 --- a/drivers/net/wireless/ti/wlcore/wlcore_i.h
 +++ b/drivers/net/wireless/ti/wlcore/wlcore_i.h
-@@ -215,7 +215,7 @@ struct wl1271_if_operations {
+@@ -216,7 +216,7 @@ struct wl1271_if_operations {
  	void (*init)(struct device *child);
  	int (*power)(struct device *child, bool enable);
  	void (*set_block_size) (struct device *child, unsigned int blksz);

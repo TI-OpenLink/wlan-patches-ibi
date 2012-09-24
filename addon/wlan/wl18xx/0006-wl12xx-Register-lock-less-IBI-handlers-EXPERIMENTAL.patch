@@ -1,4 +1,4 @@
-From 15d1e48a79c5d12d140bcf1b4bb21869c5ff9e55 Mon Sep 17 00:00:00 2001
+From fe804c9ee40beb0c3fbe0e9a55c8cc63df513059 Mon Sep 17 00:00:00 2001
 From: Ido Yariv <ido@wizery.com>
 Date: Mon, 2 Jan 2012 21:50:02 +0200
 Subject: [PATCH 06/10] wl12xx: Register lock-less IBI handlers *EXPERIMENTAL*
@@ -20,10 +20,10 @@ Signed-off-by: Eliad Peller <eliad@wizery.com>
  3 files changed, 31 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/net/wireless/ti/wlcore/main.c b/drivers/net/wireless/ti/wlcore/main.c
-index 66d02e8..8fcff0d 100644
+index 0d4c150..cf0a63a 100644
 --- a/drivers/net/wireless/ti/wlcore/main.c
 +++ b/drivers/net/wireless/ti/wlcore/main.c
-@@ -494,7 +494,7 @@ static void wl1271_netstack_work(struct work_struct *work)
+@@ -516,7 +516,7 @@ static void wl1271_netstack_work(struct work_struct *work)
  
  #define WL1271_IRQ_MAX_LOOPS 256
  
@@ -32,7 +32,7 @@ index 66d02e8..8fcff0d 100644
  {
  	int ret = 0;
  	u32 intr;
-@@ -622,6 +622,7 @@ static int wlcore_irq_locked(struct wl1271 *wl)
+@@ -644,6 +644,7 @@ static int wlcore_irq_locked(struct wl1271 *wl)
  out:
  	return ret;
  }
@@ -40,7 +40,7 @@ index 66d02e8..8fcff0d 100644
  
  irqreturn_t wlcore_irq(int irq, void *cookie)
  {
-@@ -790,6 +791,7 @@ void wl12xx_queue_recovery_work(struct wl1271 *wl)
+@@ -813,6 +814,7 @@ void wl12xx_queue_recovery_work(struct wl1271 *wl)
  		ieee80211_queue_work(wl->hw, &wl->recovery_work);
  	}
  }
@@ -106,10 +106,10 @@ index ef3deb4..d27bbe1 100644
  	printk("claiming sdio irq (func=%d). ret=%d\n", func->num, ret);
  	return ret;
 diff --git a/drivers/net/wireless/ti/wlcore/wlcore.h b/drivers/net/wireless/ti/wlcore/wlcore.h
-index 5c77a67..8a922b6 100644
+index 9c3f0ca..3dc14c8 100644
 --- a/drivers/net/wireless/ti/wlcore/wlcore.h
 +++ b/drivers/net/wireless/ti/wlcore/wlcore.h
-@@ -441,6 +441,7 @@ int wlcore_set_key(struct wl1271 *wl, enum set_key_cmd cmd,
+@@ -443,6 +443,7 @@ int wlcore_set_key(struct wl1271 *wl, enum set_key_cmd cmd,
  		   struct ieee80211_key_conf *key_conf);
  irqreturn_t wl12xx_hardirq(int irq, void *cookie);
  irqreturn_t wlcore_irq(int irq, void *cookie);
@@ -118,5 +118,5 @@ index 5c77a67..8a922b6 100644
  static inline void
  wlcore_set_ht_cap(struct wl1271 *wl, enum ieee80211_band band,
 -- 
-1.7.7.6
+1.7.9
 

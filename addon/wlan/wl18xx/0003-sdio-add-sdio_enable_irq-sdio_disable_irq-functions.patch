@@ -1,4 +1,4 @@
-From 9606ee18121495c2136b69b8fe62d61104d1c191 Mon Sep 17 00:00:00 2001
+From be0ec170aef37731919f36d281cc2b6bb93110e5 Mon Sep 17 00:00:00 2001
 From: Eliad Peller <eliad@wizery.com>
 Date: Sun, 22 Jan 2012 15:57:22 +0200
 Subject: [PATCH 03/10] sdio: add sdio_enable_irq/sdio_disable_irq functions
@@ -96,5 +96,5 @@ index 50f0bc9..5bdfffc 100644
  extern unsigned int sdio_align_size(struct sdio_func *func, unsigned int sz);
  
 -- 
-1.7.7.6
+1.7.9
 
