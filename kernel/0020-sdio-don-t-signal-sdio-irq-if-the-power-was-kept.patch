@@ -1,0 +1,30 @@
+From eb6de6135b977e911ced57589e513bb5e11800b6 Mon Sep 17 00:00:00 2001
+From: Eliad Peller <eliad@wizery.com>
+Date: Tue, 6 Nov 2012 18:15:08 +0200
+Subject: [PATCH 1/2] sdio: don't signal sdio irq if the power was kept
+
+if the power was kept during during suspend, the
+sdio_irq was operational all the time, and there
+is no reason to signal it (for pending irqs)
+
+Signed-off-by: Eliad Peller <eliad@wizery.com>
+---
+ drivers/mmc/core/sdio.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/drivers/mmc/core/sdio.c b/drivers/mmc/core/sdio.c
+index 7be2199..521d3ed 100644
+--- a/drivers/mmc/core/sdio.c
++++ b/drivers/mmc/core/sdio.c
+@@ -686,7 +686,7 @@ static int mmc_sdio_resume(struct mmc_host *host)
+ 		}
+ 	}
+ 
+-	if (!err && host->sdio_irqs)
++	if (!err && !mmc_card_keep_power(host) && host->sdio_irqs)
+ 		mmc_signal_sdio_irq(host);
+ 	mmc_release_host(host);
+ 
+-- 
+1.7.6.401.g6a319
+

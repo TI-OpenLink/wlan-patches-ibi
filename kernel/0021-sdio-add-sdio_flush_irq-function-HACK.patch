@@ -1,0 +1,165 @@
+From 4795c38ed4736ac250f9ec0242b18de087e51f94 Mon Sep 17 00:00:00 2001
+From: Eliad Peller <eliad@wizery.com>
+Date: Tue, 6 Nov 2012 18:20:15 +0200
+Subject: [PATCH 2/2] sdio: add sdio_flush_irq function (HACK)
+
+add sdio_flush_irq function to allow flushing
+the sdio irq function.
+do it by setting a flag if an irq was signaled,
+and clear it after running the sdio_irq handlers.
+
+the function waits (on a waitqueue) for the flag
+to get cleared.
+
+Signed-off-by: Eliad Peller <eliad@wizery.com>
+---
+ drivers/mmc/core/host.c       |    3 ++
+ drivers/mmc/core/sdio_irq.c   |   57 +++++++++++++++++++++++++++++++++++++++-
+ include/linux/mmc/host.h      |    9 ++++++
+ include/linux/mmc/sdio_func.h |    1 +
+ 4 files changed, 68 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/mmc/core/host.c b/drivers/mmc/core/host.c
+index e09f0a7..f818201 100644
+--- a/drivers/mmc/core/host.c
++++ b/drivers/mmc/core/host.c
+@@ -303,6 +303,9 @@ struct mmc_host *mmc_alloc_host(int extra, struct device *dev)
+ 	host->max_blk_size = 512;
+ 	host->max_blk_count = PAGE_CACHE_SIZE / 512;
+ 
++	spin_lock_init(&host->sdio_irq_running_lock);
++	init_waitqueue_head(&host->sdio_wq);
++
+ 	return host;
+ 
+ free:
+diff --git a/drivers/mmc/core/sdio_irq.c b/drivers/mmc/core/sdio_irq.c
+index d2471e6..47a740c 100644
+--- a/drivers/mmc/core/sdio_irq.c
++++ b/drivers/mmc/core/sdio_irq.c
+@@ -96,6 +96,7 @@ static int sdio_irq_thread(void *_host)
+ 	struct mmc_host *host = _host;
+ 	struct sched_param param = { .sched_priority = 1 };
+ 	unsigned long period, idle_period;
++	unsigned long flags;
+ 	int ret;
+ 
+ 	sched_setscheduler(current, SCHED_FIFO, &param);
+@@ -161,16 +162,29 @@ static int sdio_irq_thread(void *_host)
+ 		}
+ 
+ 		set_current_state(TASK_INTERRUPTIBLE);
+-		if (host->caps & MMC_CAP_SDIO_IRQ)
++		if (host->caps & MMC_CAP_SDIO_IRQ) {
++			spin_lock_irqsave(&host->sdio_irq_running_lock, flags);
++			host->sdio_irq_running = false;
++			wake_up_all(&host->sdio_wq);
++			spin_unlock_irqrestore(&host->sdio_irq_running_lock, flags);
++
+ 			host->ops->enable_sdio_irq(host, 1);
++		}
+ 		if (!kthread_should_stop())
+ 			schedule_timeout(period);
+ 		set_current_state(TASK_RUNNING);
+ 	} while (!kthread_should_stop());
+ 
+-	if (host->caps & MMC_CAP_SDIO_IRQ)
++	if (host->caps & MMC_CAP_SDIO_IRQ) {
+ 		host->ops->enable_sdio_irq(host, 0);
+ 
++		spin_lock_irqsave(&host->sdio_irq_running_lock, flags);
++		host->sdio_irq_running = false;
++		wake_up_all(&host->sdio_wq);
++		spin_unlock_irqrestore(&host->sdio_irq_running_lock, flags);
++	}
++
++
+ 	pr_debug("%s: IRQ thread exiting with code %d\n",
+ 		 mmc_hostname(host), ret);
+ 
+@@ -437,3 +451,42 @@ int sdio_disable_irq(struct sdio_func *func)
+ }
+ EXPORT_SYMBOL_GPL(sdio_disable_irq);
+ 
++static bool sdio_irq_running(struct mmc_host *host)
++{
++	unsigned long flags;
++	bool running;
++
++	spin_lock_irqsave(&host->sdio_irq_running_lock, flags);
++	running = host->sdio_irq_running;
++	spin_unlock_irqrestore(&host->sdio_irq_running_lock, flags);
++
++	return running;
++}
++
++int sdio_flush_irq(struct sdio_func *func)
++{
++	struct mmc_host *host;
++
++	BUG_ON(!func);
++	BUG_ON(!func->card);
++
++	host = func->card->host;
++
++	while (sdio_irq_running(host)) {
++		DEFINE_WAIT(wait);
++
++		prepare_to_wait(&host->sdio_wq, &wait, TASK_UNINTERRUPTIBLE);
++		if (sdio_irq_running(host))
++			schedule();
++
++		/*
++		 * we should check the condition again, but this might be
++		 * a problem as a new irq might have come in the meantime
++		 */
++		finish_wait(&host->sdio_wq, &wait);
++
++		break;
++	}
++	return 0;
++}
++EXPORT_SYMBOL_GPL(sdio_flush_irq);
+diff --git a/include/linux/mmc/host.h b/include/linux/mmc/host.h
+index 4f47b33..062fd7b 100644
+--- a/include/linux/mmc/host.h
++++ b/include/linux/mmc/host.h
+@@ -276,6 +276,10 @@ struct mmc_host {
+ 	struct task_struct	*sdio_irq_thread;
+ 	atomic_t		sdio_irq_thread_abort;
+ 
++	spinlock_t		sdio_irq_running_lock;
++	bool			sdio_irq_running;
++	wait_queue_head_t	sdio_wq;
++
+ 	mmc_pm_flag_t		pm_flags;	/* requested pm features */
+ 
+ #ifdef CONFIG_LEDS_TRIGGERS
+@@ -347,7 +351,12 @@ extern void mmc_request_done(struct mmc_host *, struct mmc_request *);
+ 
+ static inline void mmc_signal_sdio_irq(struct mmc_host *host)
+ {
++	unsigned long flags;
++
+ 	host->ops->enable_sdio_irq(host, 0);
++	spin_lock_irqsave(&host->sdio_irq_running_lock, flags);
++	host->sdio_irq_running = true;
++	spin_unlock_irqrestore(&host->sdio_irq_running_lock, flags);
+ 	wake_up_process(host->sdio_irq_thread);
+ }
+ 
+diff --git a/include/linux/mmc/sdio_func.h b/include/linux/mmc/sdio_func.h
+index 608c83b..abac4fe 100755
+--- a/include/linux/mmc/sdio_func.h
++++ b/include/linux/mmc/sdio_func.h
+@@ -140,6 +140,7 @@ extern int sdio_claim_irq_lockless(struct sdio_func *func,
+ extern int sdio_release_irq(struct sdio_func *func);
+ extern int sdio_enable_irq(struct sdio_func *func);
+ extern int sdio_disable_irq(struct sdio_func *func);
++extern int sdio_flush_irq(struct sdio_func *func);
+ 
+ extern unsigned int sdio_align_size(struct sdio_func *func, unsigned int sz);
+ 
+-- 
+1.7.6.401.g6a319
+
