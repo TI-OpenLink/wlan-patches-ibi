@@ -1,7 +1,7 @@
-From be0ec170aef37731919f36d281cc2b6bb93110e5 Mon Sep 17 00:00:00 2001
+From 84a12f3aa38c9265b7af4c7adadddd8b6b6d11ed Mon Sep 17 00:00:00 2001
 From: Eliad Peller <eliad@wizery.com>
 Date: Sun, 22 Jan 2012 15:57:22 +0200
-Subject: [PATCH 03/10] sdio: add sdio_enable_irq/sdio_disable_irq functions
+Subject: [PATCH 03/12] sdio: add sdio_enable_irq/sdio_disable_irq functions
 
 In some cases, we'd like to disable the irq, without stopping
 the handler thread, as this is our own context (i.e. doing

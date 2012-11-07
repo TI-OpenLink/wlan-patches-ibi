@@ -1,7 +1,7 @@
-From 4d35f2ce4bc4af8fe6340a98b2a75622570d3fbf Mon Sep 17 00:00:00 2001
+From 2cd75fb722f33a79c0ac3498fcb78ddb568706f3 Mon Sep 17 00:00:00 2001
 From: Eliad Peller <eliad@wizery.com>
 Date: Thu, 3 Nov 2011 14:55:18 +0200
-Subject: [PATCH 04/10] wl18xx: enable/disable sdio irq on resume
+Subject: [PATCH 04/12] wl18xx: enable/disable sdio irq on resume
 
 call the new sdio_disable_irq when getting an irq
 while the host is suspended and enable-only

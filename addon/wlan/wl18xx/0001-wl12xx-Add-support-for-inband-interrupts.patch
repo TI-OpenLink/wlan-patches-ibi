@@ -1,7 +1,7 @@
-From f74a39be3c4b61e7f28a3e1a2660637fa8702fc3 Mon Sep 17 00:00:00 2001
+From 1fdaff82e2a9db90a92c3fbf7918b0c872d92366 Mon Sep 17 00:00:00 2001
 From: Ido Reis <idor@ti.com>
-Date: Mon, 24 Sep 2012 21:50:23 +0200
-Subject: [PATCH 01/10] wl12xx: Add support for inband interrupts
+Date: Wed, 7 Nov 2012 11:44:20 +0200
+Subject: [PATCH 01/12] wl12xx: Add support for inband interrupts
 
 TODO:
 * we seem to deadlock on unload.
@@ -61,7 +61,7 @@ index 68e74ee..b70c1f4 100644
  EXPORT_SYMBOL_GPL(wlcore_enable_interrupts);
  
 diff --git a/drivers/net/wireless/ti/wlcore/main.c b/drivers/net/wireless/ti/wlcore/main.c
-index e4f0596..40eb5ec 100644
+index b3e06f7..8044ea0 100644
 --- a/drivers/net/wireless/ti/wlcore/main.c
 +++ b/drivers/net/wireless/ti/wlcore/main.c
 @@ -60,6 +60,7 @@ static char *fwlog_param;
@@ -72,7 +72,7 @@ index e4f0596..40eb5ec 100644
  
  static void __wl1271_op_remove_interface(struct wl1271 *wl,
  					 struct ieee80211_vif *vif,
-@@ -644,7 +645,7 @@ out:
+@@ -650,7 +651,7 @@ out:
  	return ret;
  }
  
@@ -81,7 +81,7 @@ index e4f0596..40eb5ec 100644
  {
  	int ret;
  	unsigned long flags;
-@@ -6043,7 +6044,7 @@ int wlcore_free_hw(struct wl1271 *wl)
+@@ -6162,7 +6163,7 @@ int wlcore_free_hw(struct wl1271 *wl)
  }
  EXPORT_SYMBOL_GPL(wlcore_free_hw);
  
@@ -90,7 +90,7 @@ index e4f0596..40eb5ec 100644
  {
  	struct wl1271 *wl = cookie;
  	unsigned long flags;
-@@ -6062,7 +6063,8 @@ static irqreturn_t wl12xx_hardirq(int irq, void *cookie)
+@@ -6181,7 +6182,8 @@ static irqreturn_t wl12xx_hardirq(int irq, void *cookie)
  		/* don't enqueue a work right now. mark it as pending */
  		set_bit(WL1271_FLAG_PENDING_WORK, &wl->flags);
  		wl1271_debug(DEBUG_IRQ, "should not enqueue work");
@@ -100,7 +100,7 @@ index e4f0596..40eb5ec 100644
  		pm_wakeup_event(wl->dev, 0);
  #ifdef CONFIG_HAS_WAKELOCK
  		if (!test_and_set_bit(WL1271_FLAG_WAKE_LOCK, &wl->flags))
-@@ -6109,30 +6111,42 @@ int __devinit wlcore_probe(struct wl1271 *wl, struct platform_device *pdev)
+@@ -6228,30 +6230,42 @@ int __devinit wlcore_probe(struct wl1271 *wl, struct platform_device *pdev)
  	else
  		irqflags = IRQF_TRIGGER_HIGH | IRQF_ONESHOT;
  
@@ -163,7 +163,7 @@ index e4f0596..40eb5ec 100644
  
  	ret = wl12xx_get_hw_info(wl);
  	if (ret < 0) {
-@@ -6187,7 +6201,8 @@ out_unreg:
+@@ -6306,7 +6320,8 @@ out_unreg:
  	wl1271_unregister_hw(wl);
  
  out_irq:
@@ -173,7 +173,7 @@ index e4f0596..40eb5ec 100644
  
  out_free_hw:
  	wlcore_free_hw(wl);
-@@ -6203,10 +6218,12 @@ int __devexit wlcore_remove(struct platform_device *pdev)
+@@ -6322,10 +6337,12 @@ int __devexit wlcore_remove(struct platform_device *pdev)
  
  	if (wl->irq_wake_enabled) {
  		device_init_wakeup(wl->dev, 0);
@@ -188,7 +188,7 @@ index e4f0596..40eb5ec 100644
  	wlcore_free_hw(wl);
  
  	return 0;
-@@ -6231,6 +6248,10 @@ MODULE_PARM_DESC(bug_on_recovery, "BUG() on fw recovery");
+@@ -6350,6 +6367,10 @@ MODULE_PARM_DESC(bug_on_recovery, "BUG() on fw recovery");
  module_param(no_recovery, int, S_IRUSR | S_IWUSR);
  MODULE_PARM_DESC(no_recovery, "Prevent HW recovery. FW will remain stuck.");
  
@@ -278,10 +278,10 @@ index 73ace4b..a9d9ece 100644
  
  static int __devinit wl1271_probe(struct sdio_func *func,
 diff --git a/drivers/net/wireless/ti/wlcore/wlcore.h b/drivers/net/wireless/ti/wlcore/wlcore.h
-index ce12c1a..ec3cba4 100644
+index 53ced4c..15a71c9 100644
 --- a/drivers/net/wireless/ti/wlcore/wlcore.h
 +++ b/drivers/net/wireless/ti/wlcore/wlcore.h
-@@ -163,6 +163,7 @@ struct wl1271 {
+@@ -171,6 +171,7 @@ struct wl1271 {
  	struct wl1271_if_operations *if_ops;
  
  	void (*set_power)(bool enable);
@@ -289,17 +289,17 @@ index ce12c1a..ec3cba4 100644
  	int irq;
  
  	spinlock_t wl_lock;
-@@ -439,6 +440,8 @@ int wlcore_set_key(struct wl1271 *wl, enum set_key_cmd cmd,
- 		   struct ieee80211_vif *vif,
+@@ -463,6 +464,8 @@ int wlcore_set_key(struct wl1271 *wl, enum set_key_cmd cmd,
  		   struct ieee80211_sta *sta,
  		   struct ieee80211_key_conf *key_conf);
+ void wlcore_regdomain_config(struct wl1271 *wl);
 +irqreturn_t wl12xx_hardirq(int irq, void *cookie);
 +irqreturn_t wlcore_irq(int irq, void *cookie);
  
  static inline void
  wlcore_set_ht_cap(struct wl1271 *wl, enum ieee80211_band band,
 diff --git a/drivers/net/wireless/ti/wlcore/wlcore_i.h b/drivers/net/wireless/ti/wlcore/wlcore_i.h
-index b3bb7f9..a912058 100644
+index d7a3684..a9a404b 100644
 --- a/drivers/net/wireless/ti/wlcore/wlcore_i.h
 +++ b/drivers/net/wireless/ti/wlcore/wlcore_i.h
 @@ -30,6 +30,7 @@
@@ -310,7 +310,7 @@ index b3bb7f9..a912058 100644
  #include <net/mac80211.h>
  #ifdef CONFIG_HAS_WAKELOCK
  #include <linux/wakelock.h>
-@@ -215,6 +216,11 @@ struct wl1271_if_operations {
+@@ -218,6 +219,11 @@ struct wl1271_if_operations {
  	void (*init)(struct device *child);
  	int (*power)(struct device *child, bool enable);
  	void (*set_block_size) (struct device *child, unsigned int blksz);

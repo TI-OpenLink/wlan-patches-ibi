@@ -1,7 +1,7 @@
-From 85624a979191156b49030bab88a6614b8fd8f268 Mon Sep 17 00:00:00 2001
+From 0782cf0538fd78e382947c2daee1f1939657a10d Mon Sep 17 00:00:00 2001
 From: Eliad Peller <eliad@wizery.com>
 Date: Thu, 3 Nov 2011 14:57:04 +0200
-Subject: [PATCH 05/10] wl18xx: set WIPHY_WOWLAN_ANY for IBI as well
+Subject: [PATCH 05/12] wl18xx: set WIPHY_WOWLAN_ANY for IBI as well
 
 Allow configuring wowlan (and define the device as wakeup
 source) also when working with IBI.
@@ -14,10 +14,10 @@ Signed-off-by: Eliad Peller <eliad@wizery.com>
  1 files changed, 17 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/net/wireless/ti/wlcore/main.c b/drivers/net/wireless/ti/wlcore/main.c
-index 40eb5ec..0d4c150 100644
+index 8044ea0..996ada9 100644
 --- a/drivers/net/wireless/ti/wlcore/main.c
 +++ b/drivers/net/wireless/ti/wlcore/main.c
-@@ -6131,21 +6131,26 @@ int __devinit wlcore_probe(struct wl1271 *wl, struct platform_device *pdev)
+@@ -6250,21 +6250,26 @@ int __devinit wlcore_probe(struct wl1271 *wl, struct platform_device *pdev)
  
  #ifdef CONFIG_PM
  		ret = enable_irq_wake(wl->irq);
