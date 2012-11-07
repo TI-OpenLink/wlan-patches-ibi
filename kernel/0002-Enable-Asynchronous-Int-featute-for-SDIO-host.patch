@@ -1,7 +1,7 @@
-From 9f867a40ebabff5cd21687e209718e74cf8b6d11 Mon Sep 17 00:00:00 2001
+From 96eb0b8ad6f68af920afe013ad8df18a81a00087 Mon Sep 17 00:00:00 2001
 From: Ido Reis <idor@ti.com>
 Date: Mon, 30 Apr 2012 13:50:38 +0300
-Subject: [PATCH 02/19] Enable Asynchronous Int featute for SDIO host
+Subject: [PATCH 02/21] Enable Asynchronous Int featute for SDIO host
 
 Enble the use of SDIO card interrupts.
 
@@ -265,5 +265,5 @@ index 96b6ec8..a7c709e 100644
  	mmc->caps |= mmc_slot(host).caps;
  	if (mmc->caps & MMC_CAP_8_BIT_DATA)
 -- 
-1.7.7.6
+1.7.9
 

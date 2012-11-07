@@ -1,7 +1,7 @@
-From 0bad224b813f0f40004bacb7d6070390649d0ec8 Mon Sep 17 00:00:00 2001
+From 4c7eb692e3ed5cff43c6bc9bf160d8ade6fcde00 Mon Sep 17 00:00:00 2001
 From: Eliad Peller <eliad@wizery.com>
 Date: Sun, 11 Sep 2011 11:05:29 +0300
-Subject: [PATCH 04/19] add MMC_CAP_ASYNC_SDIO_IRQ
+Subject: [PATCH 04/21] add MMC_CAP_ASYNC_SDIO_IRQ
 
 additionaly, move MMC_CAP_SDIO_IRQ support declaration to board file,
 rather than the generic omap_hsmmc.
@@ -14,10 +14,10 @@ Signed-off-by: Eliad Peller <eliad@wizery.com>
  3 files changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/arch/arm/mach-omap2/board-4430sdp.c b/arch/arm/mach-omap2/board-4430sdp.c
-index 54038ab..a3d665c 100644
+index c25a73b..a408b9d 100644
 --- a/arch/arm/mach-omap2/board-4430sdp.c
 +++ b/arch/arm/mach-omap2/board-4430sdp.c
-@@ -509,7 +509,8 @@ static struct omap2_hsmmc_info mmc[] = {
+@@ -515,7 +515,8 @@ static struct omap2_hsmmc_info mmc[] = {
  	},
  	{
  		.mmc		= 5,
@@ -54,5 +54,5 @@ index 2cfa8d0..4f47b33 100644
  	mmc_pm_flag_t		pm_caps;	/* supported pm features */
  
 -- 
-1.7.7.6
+1.7.9
 

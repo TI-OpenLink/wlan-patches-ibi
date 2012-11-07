@@ -1,7 +1,7 @@
-From 63f92016938375a34b62a6a5ad5949d47c5ff916 Mon Sep 17 00:00:00 2001
+From 0bc5dadaf543b6a60b63478f7a6c6414aab4dcad Mon Sep 17 00:00:00 2001
 From: Eliad Peller <eliad@wizery.com>
 Date: Sun, 11 Sep 2011 11:18:30 +0300
-Subject: [PATCH 18/19] add CIRQ_ENABLE to irq_mask if IBI is supported
+Subject: [PATCH 18/21] add CIRQ_ENABLE to irq_mask if IBI is supported
 
 Signed-off-by: Eliad Peller <eliad@wizery.com>
 ---
@@ -23,5 +23,5 @@ index fcfd7e6..0d6f082 100644
  	OMAP_HSMMC_WRITE(host->base, ISE, irq_mask);
  	OMAP_HSMMC_WRITE(host->base, IE, irq_mask);
 -- 
-1.7.7.6
+1.7.9
 

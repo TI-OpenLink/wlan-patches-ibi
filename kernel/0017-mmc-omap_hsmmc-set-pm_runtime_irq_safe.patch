@@ -1,7 +1,7 @@
-From a7a2bd442437c4127ea9213d829f4c744f781ef7 Mon Sep 17 00:00:00 2001
+From 65f7b7ec79331dcadd62355ca4f8c0e2d18488d3 Mon Sep 17 00:00:00 2001
 From: Eliad Peller <eliad@wizery.com>
 Date: Sun, 11 Mar 2012 15:47:00 +0200
-Subject: [PATCH 17/19] mmc: omap_hsmmc: set pm_runtime_irq_safe
+Subject: [PATCH 17/21] mmc: omap_hsmmc: set pm_runtime_irq_safe
 
 Declare the pm runtime handlers as safe to run
 in atomic context (it's in fact being called
@@ -25,5 +25,5 @@ index 8af755d..fcfd7e6 100644
  	/*
  	 * If runtime PM is not enabled, ensure clocks are always enabled.
 -- 
-1.7.7.6
+1.7.9
 

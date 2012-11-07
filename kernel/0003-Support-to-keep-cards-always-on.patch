@@ -1,7 +1,7 @@
-From 80b60240cead01d589c04757ac78d38b8372a144 Mon Sep 17 00:00:00 2001
+From 3a372f7dbc007370677feafa6f33fa74499e204d Mon Sep 17 00:00:00 2001
 From: Sourav Poddar <sourav.poddar@ti.com>
 Date: Thu, 2 Jun 2011 13:09:09 +0530
-Subject: [PATCH 03/19] Support to keep cards always on
+Subject: [PATCH 03/21] Support to keep cards always on
 
 To keep cards always ON and to make mmc_release_host
 call only once.
@@ -51,5 +51,5 @@ index a7c709e..4024fb6 100644
  }
  
 -- 
-1.7.7.6
+1.7.9
 

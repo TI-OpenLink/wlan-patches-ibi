@@ -1,7 +1,7 @@
-From 05564ac0c21e99d5e1f3ad59b4a0281073b83c80 Mon Sep 17 00:00:00 2001
+From 80e3c372f7b9cc32e670f8b862607fb59692b35b Mon Sep 17 00:00:00 2001
 From: Ido Yariv <ido@wizery.com>
 Date: Mon, 23 Apr 2012 19:10:51 +0300
-Subject: [PATCH 19/19] mmc: omap_hsmmc: Avoid spurious interrupts in dat1
+Subject: [PATCH 19/21] mmc: omap_hsmmc: Avoid spurious interrupts in dat1
  handler
 
 *** HACK ***
@@ -39,5 +39,5 @@ index 0d6f082..08987c6 100644
  	mmc_signal_sdio_irq(host->mmc);
  
 -- 
-1.7.7.6
+1.7.9
 

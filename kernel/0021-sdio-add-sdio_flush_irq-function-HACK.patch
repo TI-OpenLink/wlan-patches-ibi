@@ -1,7 +1,7 @@
-From 4795c38ed4736ac250f9ec0242b18de087e51f94 Mon Sep 17 00:00:00 2001
+From b98515f6768974b1cbac9bb6c2c705b881c41683 Mon Sep 17 00:00:00 2001
 From: Eliad Peller <eliad@wizery.com>
 Date: Tue, 6 Nov 2012 18:20:15 +0200
-Subject: [PATCH 2/2] sdio: add sdio_flush_irq function (HACK)
+Subject: [PATCH 21/21] sdio: add sdio_flush_irq function (HACK)
 
 add sdio_flush_irq function to allow flushing
 the sdio irq function.
@@ -161,5 +161,5 @@ index 608c83b..abac4fe 100755
  extern unsigned int sdio_align_size(struct sdio_func *func, unsigned int sz);
  
 -- 
-1.7.6.401.g6a319
+1.7.9
 

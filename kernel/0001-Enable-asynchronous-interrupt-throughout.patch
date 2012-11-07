@@ -1,7 +1,7 @@
-From eff69eee30aaf1bbda9aaf9a956d3512670541bb Mon Sep 17 00:00:00 2001
+From c87fd111c0cc334f36912cefee3af83a303b3014 Mon Sep 17 00:00:00 2001
 From: Sourav Poddar <sourav.poddar@ti.com>
 Date: Thu, 2 Jun 2011 13:09:09 +0530
-Subject: [PATCH 01/19] Enable asynchronous interrupt throughout
+Subject: [PATCH 01/21] Enable asynchronous interrupt throughout
 
 To keep Interrupt enabled outside transaction.
 
@@ -48,5 +48,5 @@ index ed886c1..96b6ec8 100644
  				OMAP_HSMMC_READ(host->base, HCTL) & ~SDBP);
  			mmc_release_host_sync(host->mmc);
 -- 
-1.7.7.6
+1.7.9
 
