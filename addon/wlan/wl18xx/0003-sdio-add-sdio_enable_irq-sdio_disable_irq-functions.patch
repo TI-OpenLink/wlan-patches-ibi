@@ -1,4 +1,4 @@
-From 84a12f3aa38c9265b7af4c7adadddd8b6b6d11ed Mon Sep 17 00:00:00 2001
+From 6dd23349100a64869aa31a3d69cc8f88ca61b57e Mon Sep 17 00:00:00 2001
 From: Eliad Peller <eliad@wizery.com>
 Date: Sun, 22 Jan 2012 15:57:22 +0200
 Subject: [PATCH 03/12] sdio: add sdio_enable_irq/sdio_disable_irq functions

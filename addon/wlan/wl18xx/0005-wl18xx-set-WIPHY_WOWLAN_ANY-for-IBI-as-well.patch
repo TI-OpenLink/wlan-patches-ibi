@@ -1,4 +1,4 @@
-From 0782cf0538fd78e382947c2daee1f1939657a10d Mon Sep 17 00:00:00 2001
+From 83f10981f9aa2a7f73504b16561978011f6f9146 Mon Sep 17 00:00:00 2001
 From: Eliad Peller <eliad@wizery.com>
 Date: Thu, 3 Nov 2011 14:57:04 +0200
 Subject: [PATCH 05/12] wl18xx: set WIPHY_WOWLAN_ANY for IBI as well
@@ -14,10 +14,10 @@ Signed-off-by: Eliad Peller <eliad@wizery.com>
  1 files changed, 17 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/net/wireless/ti/wlcore/main.c b/drivers/net/wireless/ti/wlcore/main.c
-index 8044ea0..996ada9 100644
+index dddf778..2508ea1 100644
 --- a/drivers/net/wireless/ti/wlcore/main.c
 +++ b/drivers/net/wireless/ti/wlcore/main.c
-@@ -6250,21 +6250,26 @@ int __devinit wlcore_probe(struct wl1271 *wl, struct platform_device *pdev)
+@@ -6325,21 +6325,26 @@ int __devinit wlcore_probe(struct wl1271 *wl, struct platform_device *pdev)
  
  #ifdef CONFIG_PM
  		ret = enable_irq_wake(wl->irq);

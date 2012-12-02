@@ -1,4 +1,4 @@
-From 8717e61486b41214e284d70c4ad67a3aae18dec9 Mon Sep 17 00:00:00 2001
+From 11cf068786c2b20a63d28bdae43aaeb384d5d328 Mon Sep 17 00:00:00 2001
 From: Ido Yariv <ido@wizery.com>
 Date: Tue, 17 Apr 2012 19:12:36 +0300
 Subject: [PATCH 08/12] wlcore: Fix a deadlock in sdio interrupt handler

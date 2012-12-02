@@ -1,4 +1,4 @@
-From a8066839ba17e06ef862f9688b2406feb0d9211b Mon Sep 17 00:00:00 2001
+From 494e6abfb5d45266af5506c22ef8d8c034ab10f8 Mon Sep 17 00:00:00 2001
 From: Ido Reis <idor@ti.com>
 Date: Wed, 7 Nov 2012 11:49:22 +0200
 Subject: [PATCH 06/12] wl12xx: Register lock-less IBI handlers *EXPERIMENTAL*
@@ -20,7 +20,7 @@ Signed-off-by: Eliad Peller <eliad@wizery.com>
  3 files changed, 31 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/net/wireless/ti/wlcore/main.c b/drivers/net/wireless/ti/wlcore/main.c
-index 996ada9..6ca0d4b 100644
+index 2508ea1..cc10ef4 100644
 --- a/drivers/net/wireless/ti/wlcore/main.c
 +++ b/drivers/net/wireless/ti/wlcore/main.c
 @@ -522,7 +522,7 @@ static void wl1271_netstack_work(struct work_struct *work)
@@ -106,10 +106,10 @@ index ef3deb4..d27bbe1 100644
  	printk("claiming sdio irq (func=%d). ret=%d\n", func->num, ret);
  	return ret;
 diff --git a/drivers/net/wireless/ti/wlcore/wlcore.h b/drivers/net/wireless/ti/wlcore/wlcore.h
-index 050674b..bb69a92 100644
+index 67232ad..b8841cc 100644
 --- a/drivers/net/wireless/ti/wlcore/wlcore.h
 +++ b/drivers/net/wireless/ti/wlcore/wlcore.h
-@@ -467,6 +467,7 @@ int wlcore_set_key(struct wl1271 *wl, enum set_key_cmd cmd,
+@@ -477,6 +477,7 @@ int wlcore_set_key(struct wl1271 *wl, enum set_key_cmd cmd,
  void wlcore_regdomain_config(struct wl1271 *wl);
  irqreturn_t wl12xx_hardirq(int irq, void *cookie);
  irqreturn_t wlcore_irq(int irq, void *cookie);

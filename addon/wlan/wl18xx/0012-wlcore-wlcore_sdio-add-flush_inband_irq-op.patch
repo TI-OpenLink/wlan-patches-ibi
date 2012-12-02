@@ -1,4 +1,4 @@
-From 19e1b356dd57f90c601bc616d85db993de0d7f78 Mon Sep 17 00:00:00 2001
+From 3329e777acf02549399be9f4202682dec5a980f7 Mon Sep 17 00:00:00 2001
 From: Eliad Peller <eliad@wizery.com>
 Date: Tue, 6 Nov 2012 18:51:32 +0200
 Subject: [PATCH 12/12] wlcore/wlcore_sdio: add flush_inband_irq op
@@ -18,7 +18,7 @@ Signed-off-by: Eliad Peller <eliad@wizery.com>
  3 files changed, 34 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/net/wireless/ti/wlcore/main.c b/drivers/net/wireless/ti/wlcore/main.c
-index 6ca0d4b..17c6fe5 100644
+index cc10ef4..dfa9076 100644
 --- a/drivers/net/wireless/ti/wlcore/main.c
 +++ b/drivers/net/wireless/ti/wlcore/main.c
 @@ -1792,19 +1792,25 @@ static int wl1271_op_suspend(struct ieee80211_hw *hw,
@@ -93,7 +93,7 @@ index bb94c28..05462d6 100644
  
  static int __devinit wl1271_probe(struct sdio_func *func,
 diff --git a/drivers/net/wireless/ti/wlcore/wlcore_i.h b/drivers/net/wireless/ti/wlcore/wlcore_i.h
-index 3b419b7..e39721e 100644
+index 90eafbb..eb4639d 100644
 --- a/drivers/net/wireless/ti/wlcore/wlcore_i.h
 +++ b/drivers/net/wireless/ti/wlcore/wlcore_i.h
 @@ -226,6 +226,7 @@ struct wl1271_if_operations {

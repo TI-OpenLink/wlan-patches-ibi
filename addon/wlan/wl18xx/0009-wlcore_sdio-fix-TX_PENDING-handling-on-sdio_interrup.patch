@@ -1,4 +1,4 @@
-From 9410829333467274af9012827424808d2f5bf45d Mon Sep 17 00:00:00 2001
+From 44da0bba61d3e26e447c0b4d6a8239c20d083808 Mon Sep 17 00:00:00 2001
 From: Eliad Peller <eliad@wizery.com>
 Date: Mon, 30 Jul 2012 20:35:54 +0300
 Subject: [PATCH 09/12] wlcore_sdio: fix TX_PENDING handling on sdio_interrupt
@@ -54,10 +54,10 @@ index 08f0957..397dc32 100644
  	}
  	/*
 diff --git a/drivers/net/wireless/ti/wlcore/tx.c b/drivers/net/wireless/ti/wlcore/tx.c
-index 0b5be63..42acd86 100644
+index 5165f89..7a94973 100644
 --- a/drivers/net/wireless/ti/wlcore/tx.c
 +++ b/drivers/net/wireless/ti/wlcore/tx.c
-@@ -1202,6 +1202,16 @@ out:
+@@ -1192,6 +1192,16 @@ out:
  }
  EXPORT_SYMBOL_GPL(wl1271_tx_flush);
  
@@ -75,10 +75,10 @@ index 0b5be63..42acd86 100644
  {
  	if (WARN_ON(!rate_set))
 diff --git a/drivers/net/wireless/ti/wlcore/wlcore.h b/drivers/net/wireless/ti/wlcore/wlcore.h
-index bb69a92..d68a48a 100644
+index b8841cc..7e6dbc4 100644
 --- a/drivers/net/wireless/ti/wlcore/wlcore.h
 +++ b/drivers/net/wireless/ti/wlcore/wlcore.h
-@@ -468,6 +468,8 @@ void wlcore_regdomain_config(struct wl1271 *wl);
+@@ -478,6 +478,8 @@ void wlcore_regdomain_config(struct wl1271 *wl);
  irqreturn_t wl12xx_hardirq(int irq, void *cookie);
  irqreturn_t wlcore_irq(int irq, void *cookie);
  int wlcore_irq_locked(struct wl1271 *wl);
