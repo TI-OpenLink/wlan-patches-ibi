@@ -1,6 +1,6 @@
-From 494e6abfb5d45266af5506c22ef8d8c034ab10f8 Mon Sep 17 00:00:00 2001
+From c93a11e937b4bf46ed429160840acbaa81e3a994 Mon Sep 17 00:00:00 2001
 From: Ido Reis <idor@ti.com>
-Date: Wed, 7 Nov 2012 11:49:22 +0200
+Date: Wed, 13 Feb 2013 18:01:15 +0200
 Subject: [PATCH 06/12] wl12xx: Register lock-less IBI handlers *EXPERIMENTAL*
 
 wl->mutex is normally acquired before claiming the mmc host. In the case
@@ -13,6 +13,7 @@ host after acquiring the mutex.
 
 Signed-off-by: Ido Yariv <ido@wizery.com>
 Signed-off-by: Eliad Peller <eliad@wizery.com>
+Signed-off-by: Ido Reis <idor@ti.com>
 ---
  drivers/net/wireless/ti/wlcore/main.c   |    4 +++-
  drivers/net/wireless/ti/wlcore/sdio.c   |   30 +++++++++++++++++++++++++++---
@@ -20,10 +21,10 @@ Signed-off-by: Eliad Peller <eliad@wizery.com>
  3 files changed, 31 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/net/wireless/ti/wlcore/main.c b/drivers/net/wireless/ti/wlcore/main.c
-index 2508ea1..cc10ef4 100644
+index f8a27a5..907d4ae 100644
 --- a/drivers/net/wireless/ti/wlcore/main.c
 +++ b/drivers/net/wireless/ti/wlcore/main.c
-@@ -522,7 +522,7 @@ static void wl1271_netstack_work(struct work_struct *work)
+@@ -533,7 +533,7 @@ static void wl1271_netstack_work(struct work_struct *work)
  
  #define WL1271_IRQ_MAX_LOOPS 256
  
@@ -32,7 +33,7 @@ index 2508ea1..cc10ef4 100644
  {
  	int ret = 0;
  	u32 intr;
-@@ -650,6 +650,7 @@ static int wlcore_irq_locked(struct wl1271 *wl)
+@@ -661,6 +661,7 @@ static int wlcore_irq_locked(struct wl1271 *wl)
  out:
  	return ret;
  }
@@ -40,7 +41,7 @@ index 2508ea1..cc10ef4 100644
  
  irqreturn_t wlcore_irq(int irq, void *cookie)
  {
-@@ -819,6 +820,7 @@ void wl12xx_queue_recovery_work(struct wl1271 *wl)
+@@ -830,6 +831,7 @@ void wl12xx_queue_recovery_work(struct wl1271 *wl)
  		ieee80211_queue_work(wl->hw, &wl->recovery_work);
  	}
  }
@@ -106,17 +107,17 @@ index ef3deb4..d27bbe1 100644
  	printk("claiming sdio irq (func=%d). ret=%d\n", func->num, ret);
  	return ret;
 diff --git a/drivers/net/wireless/ti/wlcore/wlcore.h b/drivers/net/wireless/ti/wlcore/wlcore.h
-index 67232ad..b8841cc 100644
+index 78dacd9..c0c2670 100644
 --- a/drivers/net/wireless/ti/wlcore/wlcore.h
 +++ b/drivers/net/wireless/ti/wlcore/wlcore.h
-@@ -477,6 +477,7 @@ int wlcore_set_key(struct wl1271 *wl, enum set_key_cmd cmd,
- void wlcore_regdomain_config(struct wl1271 *wl);
+@@ -537,6 +537,7 @@ wlcore_set_min_fw_ver(struct wl1271 *wl, unsigned int chip,
+ 
  irqreturn_t wl12xx_hardirq(int irq, void *cookie);
  irqreturn_t wlcore_irq(int irq, void *cookie);
 +int wlcore_irq_locked(struct wl1271 *wl);
  
- static inline void
- wlcore_set_ht_cap(struct wl1271 *wl, enum ieee80211_band band,
+ /* TODO: move to the lower drivers when all usages are abstracted */
+ #define CHIP_ID_1271_PG10              (0x4030101)
 -- 
 1.7.9
 

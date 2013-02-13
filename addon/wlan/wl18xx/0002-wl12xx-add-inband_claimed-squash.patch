@@ -1,4 +1,4 @@
-From 8ea35d6f72a607371703df1e15b464ee76877fa7 Mon Sep 17 00:00:00 2001
+From 16dc7eb5b2286704feddb9538ac34697223f3112 Mon Sep 17 00:00:00 2001
 From: Eliad Peller <eliad@wizery.com>
 Date: Sun, 22 Jan 2012 15:12:45 +0200
 Subject: [PATCH 02/12] wl12xx: add inband_claimed (squash)
@@ -90,7 +90,7 @@ index a9d9ece..7534a38 100644
  
  static void wl12xx_sdio_free_irq(struct device *child)
 diff --git a/drivers/net/wireless/ti/wlcore/wlcore.h b/drivers/net/wireless/ti/wlcore/wlcore.h
-index b26924a..67232ad 100644
+index e54e9a6..78dacd9 100644
 --- a/drivers/net/wireless/ti/wlcore/wlcore.h
 +++ b/drivers/net/wireless/ti/wlcore/wlcore.h
 @@ -178,6 +178,7 @@ struct wl1271 {
@@ -102,7 +102,7 @@ index b26924a..67232ad 100644
  
  	spinlock_t wl_lock;
 diff --git a/drivers/net/wireless/ti/wlcore/wlcore_i.h b/drivers/net/wireless/ti/wlcore/wlcore_i.h
-index 785a2ac..b16df02 100644
+index 4a10022..2bc1d8b 100644
 --- a/drivers/net/wireless/ti/wlcore/wlcore_i.h
 +++ b/drivers/net/wireless/ti/wlcore/wlcore_i.h
 @@ -219,7 +219,7 @@ struct wl1271_if_operations {

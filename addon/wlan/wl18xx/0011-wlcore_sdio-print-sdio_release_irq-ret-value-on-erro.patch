@@ -1,4 +1,4 @@
-From ac96ae05e21355cfb139687913cc93f1f094c24d Mon Sep 17 00:00:00 2001
+From 603b9ebe528ae6bd32bf77e90bace8c9fd7f5783 Mon Sep 17 00:00:00 2001
 From: Eliad Peller <eliad@wizery.com>
 Date: Tue, 6 Nov 2012 18:44:05 +0200
 Subject: [PATCH 11/12] wlcore_sdio: print sdio_release_irq ret value on error

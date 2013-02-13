@@ -1,6 +1,6 @@
-From 44da0bba61d3e26e447c0b4d6a8239c20d083808 Mon Sep 17 00:00:00 2001
-From: Eliad Peller <eliad@wizery.com>
-Date: Mon, 30 Jul 2012 20:35:54 +0300
+From 3846ae94da9e956026dd38f43b85802b5da0e329 Mon Sep 17 00:00:00 2001
+From: Ido Reis <idor@ti.com>
+Date: Wed, 13 Feb 2013 18:02:42 +0200
 Subject: [PATCH 09/12] wlcore_sdio: fix TX_PENDING handling on sdio_interrupt
 
 On wl12xx_sdio_interrupt we set WL1271_FLAG_TX_PENDING
@@ -14,6 +14,7 @@ wl1271_tx_total_queue_count(). export it by defining a
 new exported wrapper function (wlcore_tx_queue_count).
 
 Signed-off-by: Eliad Peller <eliad@wizery.com>
+Signed-off-by: Ido Reis <idor@ti.com>
 ---
  drivers/net/wireless/ti/wlcore/sdio.c   |   15 +++++++++++++++
  drivers/net/wireless/ti/wlcore/tx.c     |   10 ++++++++++
@@ -54,10 +55,10 @@ index 08f0957..397dc32 100644
  	}
  	/*
 diff --git a/drivers/net/wireless/ti/wlcore/tx.c b/drivers/net/wireless/ti/wlcore/tx.c
-index 5165f89..7a94973 100644
+index f9da61b..d737a5e 100644
 --- a/drivers/net/wireless/ti/wlcore/tx.c
 +++ b/drivers/net/wireless/ti/wlcore/tx.c
-@@ -1192,6 +1192,16 @@ out:
+@@ -1198,6 +1198,16 @@ out:
  }
  EXPORT_SYMBOL_GPL(wl1271_tx_flush);
  
@@ -75,18 +76,18 @@ index 5165f89..7a94973 100644
  {
  	if (WARN_ON(!rate_set))
 diff --git a/drivers/net/wireless/ti/wlcore/wlcore.h b/drivers/net/wireless/ti/wlcore/wlcore.h
-index b8841cc..7e6dbc4 100644
+index c0c2670..c39018e 100644
 --- a/drivers/net/wireless/ti/wlcore/wlcore.h
 +++ b/drivers/net/wireless/ti/wlcore/wlcore.h
-@@ -478,6 +478,8 @@ void wlcore_regdomain_config(struct wl1271 *wl);
+@@ -538,6 +538,8 @@ wlcore_set_min_fw_ver(struct wl1271 *wl, unsigned int chip,
  irqreturn_t wl12xx_hardirq(int irq, void *cookie);
  irqreturn_t wlcore_irq(int irq, void *cookie);
  int wlcore_irq_locked(struct wl1271 *wl);
 +/* exported wrapper for wl1271_tx_total_queue_count */
 +int wlcore_tx_queue_count(struct wl1271 *wl);
  
- static inline void
- wlcore_set_ht_cap(struct wl1271 *wl, enum ieee80211_band band,
+ /* TODO: move to the lower drivers when all usages are abstracted */
+ #define CHIP_ID_1271_PG10              (0x4030101)
 -- 
 1.7.9
 

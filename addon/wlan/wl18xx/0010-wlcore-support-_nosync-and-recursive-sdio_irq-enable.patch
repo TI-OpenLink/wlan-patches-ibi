@@ -1,4 +1,4 @@
-From bbf3e0299f1f16cff0c2c5f74172535f361ec9e4 Mon Sep 17 00:00:00 2001
+From 280b42e8f8c050ce7a1e12e9865117042c44c8f6 Mon Sep 17 00:00:00 2001
 From: Eliad Peller <eliad@wizery.com>
 Date: Mon, 6 Aug 2012 01:19:14 +0300
 Subject: [PATCH 10/12] wlcore: support _nosync and recursive sdio_irq
@@ -17,10 +17,10 @@ Signed-off-by: Eliad Peller <eliad@wizery.com>
  5 files changed, 72 insertions(+), 20 deletions(-)
 
 diff --git a/drivers/net/wireless/ti/wlcore/debugfs.c b/drivers/net/wireless/ti/wlcore/debugfs.c
-index 9ec59b6..25c34d1 100644
+index 1da068e..0cf7754 100644
 --- a/drivers/net/wireless/ti/wlcore/debugfs.c
 +++ b/drivers/net/wireless/ti/wlcore/debugfs.c
-@@ -577,6 +577,7 @@ static ssize_t driver_state_read(struct file *file, char __user *user_buf,
+@@ -579,6 +579,7 @@ static ssize_t driver_state_read(struct file *file, char __user *user_buf,
  	DRIVER_STATE_PRINT_LHEX(ap_ps_map);
  	DRIVER_STATE_PRINT_HEX(quirks);
  	DRIVER_STATE_PRINT_HEX(irq);
@@ -183,7 +183,7 @@ index 397dc32..d1e48c1 100644
  
  static int __devinit wl1271_probe(struct sdio_func *func,
 diff --git a/drivers/net/wireless/ti/wlcore/wlcore.h b/drivers/net/wireless/ti/wlcore/wlcore.h
-index 7e6dbc4..72690662 100644
+index c39018e..9ebc8e1 100644
 --- a/drivers/net/wireless/ti/wlcore/wlcore.h
 +++ b/drivers/net/wireless/ti/wlcore/wlcore.h
 @@ -180,6 +180,7 @@ struct wl1271 {
@@ -195,7 +195,7 @@ index 7e6dbc4..72690662 100644
  	spinlock_t wl_lock;
  
 diff --git a/drivers/net/wireless/ti/wlcore/wlcore_i.h b/drivers/net/wireless/ti/wlcore/wlcore_i.h
-index b16df02..90eafbb 100644
+index 2bc1d8b..9db6840 100644
 --- a/drivers/net/wireless/ti/wlcore/wlcore_i.h
 +++ b/drivers/net/wireless/ti/wlcore/wlcore_i.h
 @@ -224,6 +224,8 @@ struct wl1271_if_operations {
